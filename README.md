@@ -1,0 +1,4 @@
+ThroneRushBot
+=============
+
+Bot for ThroneRush
