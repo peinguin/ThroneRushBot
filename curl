@@ -1,0 +1,16 @@
+curl \
+"https://epicwar-\facebook.progrestar.net/rpc/" \
+-X POST \
+-H 'X-Auth-Application-Id:1424411677784893' \
+-H 'X-Auth-Network-Ident:facebook' \
+-H 'X-Auth-Session-Id:0n5jyr310vbq5j' \
+-H 'X-Auth-Session-Init:1' \
+-H 'X-Auth-Signature:a674d2fe6f802efdaeb00314b95e2c00' \
+-H 'X-Auth-Token:6514a97ae525f196b8060337380e0cbb' \
+-H 'X-Auth-User-Id:675063875' \
+-H 'X-Env-Library-Version:0' \
+-H 'X-Request-Id:1' \
+-H 'X-Requested-With:XMLHttpRequest' \
+-H 'Host:epicwar-facebook.progrestar.net' \
+-d '{"session":0,"calls":[{"ident":"registration","args":{"user":{"locale":"en","id":"675063875","birthday":"1970-1-1","referrer":{"type":"bookmark"},"lastName":"","city":null,"country":null,"firstName":"","sex":"female"},"friendIds":[]},"name":"registration"},{"ident":"boostGetAll","args":{},"name":"boostGetAll"},{"ident":"getTime","args":{},"name":"getTime"},{"ident":"getSelfInfo","args":{},"name":"getSelfInfo"},{"ident":"getDynamicParams","args":{},"name":"getDynamicParams"},{"ident":"getArmyQueue","args":{},"name":"getArmyQueue"},{"ident":"getBuildings","args":{},"name":"getBuildings"},{"ident":"heroesGetList","args":{},"name":"heroesGetList"},{"ident":"getResearchQueue","args":{},"name":"getResearchQueue"},{"ident":"getMissions","args":{},"name":"getMissions"},{"ident":"getQuests","args":{},"name":"getQuests"},{"ident":"getProtections","args":{},"name":"getProtections"},{"ident":"getInvitedBy","args":{},"name":"getInvitedBy"},{"ident":"getInvitedUsers","args":{},"name":"getInvitedUsers"},{"ident":"getBonusCrystals","args":{},"name":"getBonusCrystals"},{"ident":"getSettings","args":{},"name":"getSettings"},{"ident":"promoGetHalfBilling","args":{},"name":"promoGetHalfBilling"},{"ident":"giftGetAvailable","args":{},"name":"giftGetAvailable"},{"ident":"giftGetReceivers","args":{},"name":"giftGetReceivers"},{"ident":"cloverGetAll","args":{},"name":"cloverGetAll"},{"ident":"paymentsCount","args":{},"name":"paymentsCount"},{"ident":"cemeteryGet","args":{},"name":"cemeteryGet"},{"ident":"getNotices","args":{},"name":"getNotices"},{"ident":"allianceGetMessages","args":{},"name":"allianceGetMessages"},{"ident":"getGlobalNews","args":{},"name":"getGlobalNews"},{"ident":"battleGetActive","args":{},"name":"battleGetActive"},{"ident":"spellList","args":{},"name":"spellList"},{"ident":"spellProductionQueue","args":{},"name":"spellProductionQueue"},{"ident":"state","args":{},"name":"state"}]}' \
+-i
