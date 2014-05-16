@@ -26,14 +26,8 @@ func getFormattedData(calls Calls) []byte {
     return data
 }
 
-func GetTstCalls() []byte {
+func getStartBoard() []byte {
 	return getFormattedData(Calls{
-		Call{
-			Ident: "group_0_body",
-			Args: struct{Ts int `json:"ts"`; Id string `json:"id"`}{Ts:1400134235,Id:"15"},
-			Name: "battleStartMission",},
-		Call{
-			Ident:"group_1_body",
-			Args: struct{}{},
-			Name:"state"}})
+		Call{Name:"getSelfInfo",Args:struct{}{},Ident:"getSelfInfo"},
+		Call{Name:"getBuildings",Args:struct{}{},Ident:"getBuildings"}})
 }

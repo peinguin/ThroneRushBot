@@ -83,7 +83,7 @@ func addHeaders(req *http.Request, postData string) {
 	}
 }
 
-func Post(postData []byte) string {
+func Post(postData []byte) []byte {
 	client := &http.Client{}
 	req, err := http.NewRequest("POST", SERVER_URL, bytes.NewReader(postData))
 	addHeaders(req, string(postData))
@@ -95,7 +95,7 @@ func Post(postData []byte) string {
 		log.Fatal(err)
 	}
 
-	return string(body)
+	return body
 }
 
 func Init(Uid string, Sid string) {
