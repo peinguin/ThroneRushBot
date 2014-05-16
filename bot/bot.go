@@ -9,6 +9,27 @@ import(
 	"strconv"
 )
 
+const CASTLE_ID        = 1
+const MINE_ID          = 2
+const TREASURY_ID      = 3
+const MILL_ID          = 4
+const BARN_ID          = 5
+const BARRACKS_ID      = 6
+const STAFF_ID         = 7
+const BUILDER_HUT_ID   = 8
+const FORGE_ID         = 9
+const BALLISTA_ID      = 10
+const WALL_ID          = 11
+const ARCHER_TOWER_ID  = 12
+const CANNON_ID        = 13
+const THUNDER_TOWER_ID = 14
+const ICE_TOWER_ID     = 15
+const FIRE_TOWER_ID    = 16
+const CLAN_HOUSE_ID    = 17
+const DARK_TOWER_ID    = 18
+const TAVERN_ID        = 19
+const ALCHEMIST_ID     = 20
+
 type Unit struct {
 	Id uint64 `json:"id"`
 	Amount uint64 `json:"amount"`
@@ -39,6 +60,7 @@ type Player struct {
 	Stars int //interlan game currency
 	Level int
 	Resources []Resource
+	Builders int //Builder house lvl
 }
 
 type Result struct {
