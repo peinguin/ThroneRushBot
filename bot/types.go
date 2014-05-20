@@ -37,7 +37,7 @@ type Result struct {
 	Result map[string]interface{} `json:"result"`
 }
 
-type Responce struct{
+type Response struct{
 	Date float64 `json:"date"`
 	Results []Result `json:"results"`
 }

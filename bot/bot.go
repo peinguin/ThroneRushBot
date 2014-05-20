@@ -8,10 +8,11 @@ import(
 	"encoding/json"
 	"strconv"
 	"time"
+	"io"
 )
 
-func decodeJson(encoded_json []byte) *Responce {
-	var resp *Responce
+func decodeJson(encoded_json []byte) *Response {
+	var resp *Response
 	err := json.Unmarshal(encoded_json, &resp)
 	if(err != nil){
 		log.Fatal("decodeJson", err)
@@ -47,7 +48,7 @@ func initGame(playerChan chan Player) {
 	playerChan <- playerStruct
 }
 
-func processCollectRequest(player *Player, resp *Responce){
+func processCollectRequest(player *Player, resp *Response){
 	for _, result := range resp.Results {
 		if(result.Ident == "group_1_body"){
 			parseResources(player, result.Result["resource"].([]interface{}))
@@ -56,8 +57,8 @@ func processCollectRequest(player *Player, resp *Responce){
 	}
 }
 
-func collectFood(player *Player) *Responce{
-	var resp *Responce
+func collectFood(player *Player) *Response{
+	var resp *Response
 	for _, building := range player.Buildings {
 		if(building.TypeId == MILL_ID){
 			resp = decodeJson(network.Post(collectResource(building.Id)))
@@ -66,8 +67,8 @@ func collectFood(player *Player) *Responce{
 	return resp
 }
 
-func collectGold(player *Player) *Responce{
-	var resp *Responce
+func collectGold(player *Player) *Response{
+	var resp *Response
 	for _, building := range player.Buildings {
 		if(building.TypeId == MINE_ID){
 			resp = decodeJson(network.Post(collectResource(building.Id)))
@@ -77,7 +78,7 @@ func collectGold(player *Player) *Responce{
 }
 
 func resourcesCollector(playerChan chan Player) {
-	var resp *Responce
+	var resp *Response
 	var playerStruct Player
 	var player *Player
 
@@ -107,7 +108,7 @@ func resourcesCollector(playerChan chan Player) {
 func builder(playerChan chan Player){
 	var playerStruct Player
 	var player *Player
-	var resp *Responce
+	var resp *Response
 	var isBuild bool = false
 
 	playerStruct = <- playerChan
@@ -150,5 +151,16 @@ func Main(){
     	if err != nil {
 	        log.Fatal("There was an error:", err)
 	    }
+	})
+
+	http.HandleFunc("/bot/map", func (w http.ResponseWriter, r *http.Request) {
+		var playerStruct Player = <- player
+		player <- playerStruct
+
+		json, err := json.Marshal(playerStruct)
+		if(err != nil){
+			log.Fatal(err)
+		}
+		io.WriteString(w, string(json))
 	})
 }

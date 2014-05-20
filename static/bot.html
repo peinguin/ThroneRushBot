@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+  <head>
+	<title>Throne Rush Bot</title>
+	<style>
+	  #main{
+	    display:block;
+	    margin:0 auto;
+	    background-color:#00FF33;
+	  }
+	  body{
+		  background-color:#66CC00;
+		  height: 100%;
+		  margin: 0;
+		  padding: 0;
+	  }
+	  html{
+		  height: 100%;
+	  }
+	</style>
+  </head>
+  <body>
+	<canvas id="main"></canvas>
+	<script>
+	  var STYLES = {
+		  1: {
+			  name: "Castle",
+			  size: 5,
+			  fillColor: '#996600'
+		  },
+		  2: {
+			  name: "Mine",
+			  size: 2,
+			  fillColor: '#996600'
+		  },
+		  3: {
+			  name: "Treasury",
+			  size: 3,
+			  fillColor: '#996600'
+		  },
+		  4: {
+			  name: "Mill",
+			  size: 2,
+			  fillColor: '#996600'
+		  },
+		  5: {
+			  name: "Barn",
+			  size: 3,
+			  fillColor: '#996600'
+		  },
+		  6: {
+			  name: "Barracs",
+			  size: 3,
+			  fillColor: '#996600'
+		  },
+		  7: {
+			  name: "Staff",
+			  size: 2,
+			  fillColor: '#996600'
+		  },
+		  8: {
+			  name: "Bldrs",
+			  size: 2,
+			  fillColor: '#996600'
+		  },
+		  9: {
+			  name: "Forge",
+			  size: 2,
+			  fillColor: '#996600'
+		  },
+		  10: {
+			  name: "Ballista",
+			  size: 2,
+			  fillColor: '#996600'
+		  },
+		  11: {
+			  name: "",
+			  size: 1,
+			  fillColor: '#660000'
+		  },
+		  12: {
+			  name: "Archrs",
+			  size: 2,
+			  fillColor: '#996600'
+		  },
+		  13: {
+			  name: "Cannon",
+			  size: 2,
+			  fillColor: '#996600'
+		  },
+		  14: {
+			  name: "Thunder",
+			  size: 2,
+			  fillColor: '#996600'
+		  },
+		  15: {
+			  name: "Ice",
+			  size: 2,
+			  fillColor: '#996600'
+		  },
+		  16: {
+			  name: "Fire Tower",
+			  size: 2,
+			  fillColor: '#996600'
+		  },
+		  17: {
+			  name: "Clan house",
+			  size: 3,
+			  fillColor: '#996600'
+		  },
+		  18: {
+			  name: "Dark Tower",
+			  size: 2,
+			  fillColor: '#996600'
+		  },
+		  19: {
+			  name: "Tavern",
+			  size: 3,
+			  fillColor: '#996600'
+		  },
+		  20: {
+			  name: "Alchemist",
+			  size: 3,
+			  fillColor: '#996600'
+		  }
+	  };
+	  var NOT_DESANT_COLOR = "#FF0033";
+	  var height = document.body.clientHeight;
+	  var canvas = document.getElementById('main');
+	  var ctx = canvas.getContext('2d');
+	  var step = height / 34;
+	  canvas.width = height;
+	  canvas.height = height;
+	  canvas.style.width = height + 'px';
+	  canvas.style.height = height + 'px';
+
+	  ctx.strokeStyle="#FF0033";
+	  
+	  ctx.textAlign="center";
+	  ctx.textBaseline="middle";
+
+	  function drawMap(player){
+	    player.Buildings
+			  .sort(function(a, b){
+				  return a.y < b.y && a.x < b.x
+			  })
+			  .forEach(function(building){
+				  ctx.fillStyle=NOT_DESANT_COLOR;
+				  ctx.fillRect(
+					  step * (building.x - 1),
+					  step * (building.y - 1),
+					  step * (STYLES[building.typeId].size + 2),
+					  step * (STYLES[building.typeId].size + 2));
+				  ctx.stroke();
+				  ctx.fillStyle=STYLES[building.typeId].fillColor;
+				  ctx.fillRect(
+					  step * building.x,
+					  step * building.y,
+					  step * STYLES[building.typeId].size,
+					  step * STYLES[building.typeId].size);
+				  ctx.stroke();
+				  ctx.strokeText(
+					  STYLES[building.typeId].name+'('+building.level+')',
+					  step * building.x + step * STYLES[building.typeId].size / 2,
+					  step * building.y + step * STYLES[building.typeId].size / 2);
+				  console.log(building);
+			  });
+	  }
+
+	  var xmlhttp = new XMLHttpRequest();
+	  xmlhttp.open('GET', '/bot/map', true);
+	  xmlhttp.onreadystatechange = function() {
+	    if (xmlhttp.readyState === 4) {
+	      drawMap(JSON.parse(xmlhttp.responseText))
+	    }
+	  };
+	  xmlhttp.send(null);
+	</script>
+  </body>
+</html>
