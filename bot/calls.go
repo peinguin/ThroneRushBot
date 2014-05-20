@@ -31,3 +31,21 @@ func getStartBoard() []byte {
 		Call{Name:"getSelfInfo",Args:struct{}{},Ident:"getSelfInfo"},
 		Call{Name:"getBuildings",Args:struct{}{},Ident:"getBuildings"}})
 }
+
+func collectResource(building uint64) []byte {
+	return getFormattedData(Calls{
+		Call{
+			Name:"collectResource",
+			Args:struct{BuildingId uint64 `json:"buildingId"`}{BuildingId:building},
+			Ident:"group_0_body"},
+		Call{Name:"state", Args: struct{}{}, Ident:"group_1_body"}})
+}
+
+func upgradeBuilding(building uint64) []byte {
+	return getFormattedData(Calls{
+		Call{
+			Name:"upgradeBuilding",
+			Args:struct{BuildingId uint64 `json:"buildingId"`}{BuildingId:building},
+			Ident:"group_0_body"},
+		Call{Name:"state", Args: struct{}{}, Ident:"group_1_body"}})
+}

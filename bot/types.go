@@ -7,13 +7,13 @@ type Unit struct {
 
 type Building struct {
 	Id uint64 `json:"id"`
-    TypeId int `json:"typeId"`
+    TypeId uint `json:"typeId"`
     Flip bool `json:"flip"`
-    Level int `json:"level"`
-    X int `json:"x"`
-    Y int `json:"y"`
+    Level uint `json:"level"`
+    X uint `json:"x"`
+    Y uint `json:"y"`
     Completed bool `json:"completed"`
-    Volume int `json:"volume"`
+    Volume uint `json:"volume"`
     StateTimestamp uint64 `json:"stateTimestamp"`
     Hitpoints uint64 `json:"hitpoints"`
     CompleteTime uint64 `json:"completeTime"`
@@ -22,14 +22,14 @@ type Building struct {
 type Player struct {
 	Units []Unit
 	Buildings []Building
-	Stars int //interlan game currency
-	Level int
-	Resources []Resource
+	Stars uint //interlan game currency
+	Level uint
 	Builders int //Builder house lvl
 	GoldCapacity uint32
 	FoodCapacity uint32
 	Food uint32
 	Gold uint32
+	CastleLvl uint
 }
 
 type Result struct {
@@ -40,4 +40,16 @@ type Result struct {
 type Responce struct{
 	Date float64 `json:"date"`
 	Results []Result `json:"results"`
+}
+
+type BuildingDependency struct {
+	Time uint
+	CastleLvl uint
+	Cost uint32
+}
+
+type BuildingDependencies []BuildingDependency
+
+type Buildings struct {
+	Wall BuildingDependencies
 }
