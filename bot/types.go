@@ -43,7 +43,6 @@ type Responce struct{
 }
 
 type BuildingDependency struct {
-	Time uint
 	CastleLvl uint
 	Cost uint32
 }

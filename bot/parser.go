@@ -34,8 +34,10 @@ func parseBuildings(player *Player, buildings []interface{}){
 	for _, building := range buildings {
 		var typeId uint
 		var level uint
+		var completed bool
 		typeId = uint(building.(map[string]interface{})["typeId"].(float64))
 		level  = uint(building.(map[string]interface{})["level"].(float64))
+		completed = building.(map[string]interface{})["completed"].(bool)
 		if(typeId == BARN_ID) {
 			player.FoodCapacity += CAPACITIES[level]
 		}
@@ -44,6 +46,9 @@ func parseBuildings(player *Player, buildings []interface{}){
 		}
 		if(typeId == CASTLE_ID){
 			player.CastleLvl = level
+			if(completed == false){
+				player.CastleLvl--
+			}
 		}
 		player.Buildings = append(
 			player.Buildings,
@@ -54,7 +59,7 @@ func parseBuildings(player *Player, buildings []interface{}){
 				Level:         level,
 				X:             uint(building.(map[string]interface{})["x"].(float64)),
 				Y:             uint(building.(map[string]interface{})["y"].(float64)),
-				Completed:     building.(map[string]interface{})["completed"].(bool),
+				Completed:     completed,
 				Volume:        uint(building.(map[string]interface{})["volume"].(float64)),
 				StateTimestamp:uint64(building.(map[string]interface{})["stateTimestamp"].(float64)),
 				Hitpoints:     uint64(building.(map[string]interface{})["hitpoints"].(float64)),

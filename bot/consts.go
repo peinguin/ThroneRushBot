@@ -28,14 +28,14 @@ var CAPACITIES = [12]uint32 {0, 5000, 15000, 35000, 75000, 150000, 300000, 60000
 
 var BUILDINGS = Buildings{
 	Wall: BuildingDependencies{
-		BuildingDependency{Time: 0,   CastleLvl: 2,  Cost: 250},
-		BuildingDependency{Time: 5,   CastleLvl: 2,  Cost: 500},
-		BuildingDependency{Time: 10,  CastleLvl: 3,  Cost: 1000},
-		BuildingDependency{Time: 15,  CastleLvl: 4,  Cost: 3000},
-		BuildingDependency{Time: 20,  CastleLvl: 5,  Cost: 10000},
-		BuildingDependency{Time: 30,  CastleLvl: 6,  Cost: 25000},
-		BuildingDependency{Time: 40,  CastleLvl: 7,  Cost: 60000},
-		BuildingDependency{Time: 50,  CastleLvl: 8,  Cost: 150000},
-		BuildingDependency{Time: 60,  CastleLvl: 9,  Cost: 400000},
-		BuildingDependency{Time: 90,  CastleLvl: 10, Cost: 1000000},
-		BuildingDependency{Time: 120, CastleLvl: 11, Cost: 2000000}}}
+		BuildingDependency{CastleLvl: 2,  Cost: 250},
+		BuildingDependency{CastleLvl: 2,  Cost: 500},
+		BuildingDependency{CastleLvl: 3,  Cost: 1000},
+		BuildingDependency{CastleLvl: 4,  Cost: 3000},
+		BuildingDependency{CastleLvl: 5,  Cost: 10000},
+		BuildingDependency{CastleLvl: 6,  Cost: 25000},
+		BuildingDependency{CastleLvl: 7,  Cost: 60000},
+		BuildingDependency{CastleLvl: 8,  Cost: 150000},
+		BuildingDependency{CastleLvl: 9,  Cost: 400000},
+		BuildingDependency{CastleLvl: 10, Cost: 1000000},
+		BuildingDependency{CastleLvl: 11, Cost: 2000000}}}

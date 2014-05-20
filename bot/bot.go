@@ -101,53 +101,45 @@ func resourcesCollector(playerChan chan Player) {
 	playerChan <- playerStruct
 
     time.Sleep(time.Minute * 10)
-	resourcesCollector(playerChan)
+	go resourcesCollector(playerChan)
 }
 
 func builder(playerChan chan Player){
 	var playerStruct Player
 	var player *Player
-	var buildingToUpgrade *Building
 	var resp *Responce
+	var isBuild bool = false
 
-	buildingToUpgrade = nil
 	playerStruct = <- playerChan
 	player = &playerStruct
 
 	for _, building := range player.Buildings {
 		if(
 			building.TypeId == WALL_ID &&
-				len(BUILDINGS.Wall) > int(building.Level - 1) &&
-			player.CastleLvl >= BUILDINGS.Wall[building.Level - 1].CastleLvl &&
-			player.Gold >= BUILDINGS.Wall[building.Level - 1].Cost){
-			log.Print("Upgrade Wall")
-			buildingToUpgrade = &building
+			len(BUILDINGS.Wall) > int(building.Level) &&
+			player.CastleLvl >= BUILDINGS.Wall[building.Level].CastleLvl &&
+			player.Gold >= BUILDINGS.Wall[building.Level].Cost){
+			log.Print("Upgrade Wall. Level ", building.Level)
+			resp = decodeJson(network.Post(upgradeBuilding(building.Id)))
+			processCollectRequest(player, resp)
+			isBuild = true
 			break
 		}
 	}
-
-	if(buildingToUpgrade != nil){
-		resp = decodeJson(network.Post(upgradeBuilding(buildingToUpgrade.Id)))
-		processCollectRequest(player, resp)
-	}
-
 	playerChan <- playerStruct
-
-	if(buildingToUpgrade != nil){
-		time.Sleep(time.Second * time.Duration(BUILDINGS.Wall[buildingToUpgrade.Level - 1].Time))
+	if(isBuild){
+		time.Sleep(time.Second)
 	}else{
 		time.Sleep(time.Hour)
 	}
-
-	builder(playerChan)
+	go builder(playerChan)
 }
 
 func Main(){
-	var player = make(chan Player)
+	var player = make(chan Player, 1)
+	initGame(player)
 	go resourcesCollector(player)
 	go builder(player)
-	initGame(player)
-
 
 	http.HandleFunc("/bot", func (w http.ResponseWriter, r *http.Request) {
 		t, err := template.ParseFiles("static/bot.html")
