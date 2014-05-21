@@ -17,6 +17,9 @@ func decodeJson(encoded_json []byte) *Response {
 	if(err != nil){
 		log.Fatal("decodeJson", err)
 	}
+	if(resp.Error != Error{}){
+		resp = nil
+	}
 
 	return resp
 }
@@ -122,8 +125,10 @@ func builder(playerChan chan Player){
 			player.Gold >= BUILDINGS.Wall[building.Level].Cost){
 			log.Print("Upgrade Wall. Level ", building.Level)
 			resp = decodeJson(network.Post(upgradeBuilding(building.Id)))
-			processCollectRequest(player, resp)
-			isBuild = true
+			if(resp != nil){
+				processCollectRequest(player, resp)
+				isBuild = true
+			}
 			break
 		}
 	}

@@ -124,11 +124,12 @@
 			  fillColor: '#996600'
 		  }
 	  };
+	  var MAP_SIZE = 36;
 	  var NOT_DESANT_COLOR = "#FF0033";
 	  var height = document.body.clientHeight;
 	  var canvas = document.getElementById('main');
 	  var ctx = canvas.getContext('2d');
-	  var step = height / 34;
+	  var step = height / 40;
 	  canvas.width = height;
 	  canvas.height = height;
 	  canvas.style.width = height + 'px';
@@ -139,19 +140,50 @@
 	  ctx.textAlign="center";
 	  ctx.textBaseline="middle";
 
+	  function pointFree(buildings, point){
+		  for(var i in buildings){
+			  var building = buildings[i];
+			  if(
+				  point[0] >= building.x &&
+				  point[0] <  building.x + STYLES[building.typeId].size &&
+				  point[1] >= building.y &&
+				  point[1] <  building.y + STYLES[building.typeId].size
+			  ){
+				  return false;
+			  }
+		  }
+		  return true;
+	  }
+
 	  function drawMap(player){
-	    player.Buildings
-			  .sort(function(a, b){
-				  return a.y < b.y && a.x < b.x
-			  })
+		  var redPoints = [];
+		  player.Buildings
 			  .forEach(function(building){
-				  ctx.fillStyle=NOT_DESANT_COLOR;
-				  ctx.fillRect(
-					  step * (building.x - 1),
-					  step * (building.y - 1),
-					  step * (STYLES[building.typeId].size + 2),
-					  step * (STYLES[building.typeId].size + 2));
-				  ctx.stroke();
+				  for(var i = -1; i < STYLES[building.typeId].size + 1; i++){
+					  var point = [building.x + i, building.y - 1].join(',');
+					  if(redPoints.indexOf(point) === -1){
+						  redPoints.push(point);
+					  }
+				  }
+				  for(var i = -1; i < STYLES[building.typeId].size + 1; i++){
+					  var point = [building.x + i, building.y + STYLES[building.typeId].size].join(',');
+					  if(redPoints.indexOf(point) === -1){
+						  redPoints.push(point);
+					  }
+				  }
+				  for(var i = -1; i < STYLES[building.typeId].size + 1; i++){
+					  var point = [building.x - 1, building.y + i].join(',');
+					  if(redPoints.indexOf(point) === -1){
+						  redPoints.push(point);
+					  }
+				  }
+				  for(var i = -1; i < STYLES[building.typeId].size + 1; i++){
+					  var point = [building.x + STYLES[building.typeId].size, building.y + i].join(',');
+					  if(redPoints.indexOf(point) === -1){
+						  redPoints.push(point);
+					  }
+				  }
+				  
 				  ctx.fillStyle=STYLES[building.typeId].fillColor;
 				  ctx.fillRect(
 					  step * building.x,
@@ -163,8 +195,19 @@
 					  STYLES[building.typeId].name+'('+building.level+')',
 					  step * building.x + step * STYLES[building.typeId].size / 2,
 					  step * building.y + step * STYLES[building.typeId].size / 2);
-				  console.log(building);
 			  });
+	      while(redPoints.length > 0){
+			  var point = redPoints.pop().split(',');
+			  if(pointFree(player.Buildings, point)){
+				  ctx.fillStyle=NOT_DESANT_COLOR;
+				  ctx.fillRect(
+					  step * point[0],
+					  step * point[1],
+					  step,
+					  step);
+				  ctx.stroke();
+			  }
+		  }
 	  }
 
 	  var xmlhttp = new XMLHttpRequest();

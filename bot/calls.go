@@ -5,19 +5,6 @@ import (
 	"encoding/json"
 )
 
-type Call struct {
-	Ident string      `json:"ident"`
-	Args interface {} `json:"args"`
-	Name string       `json:"name"`
-}
-
-type Calls []Call
-
-type Request struct {
-	Calls Calls         `json:"calls"`
-	Session interface{} `json:"session"`
-}
-
 func getFormattedData(calls Calls) []byte {
     data, err := json.Marshal(Request{Calls:calls, Session: nil})
     if(err != nil){

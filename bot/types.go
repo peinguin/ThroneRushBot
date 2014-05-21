@@ -37,9 +37,15 @@ type Result struct {
 	Result map[string]interface{} `json:"result"`
 }
 
+type Error struct {
+	Name string `json:"name"`
+	Description string `json:"description"`
+	Call `json:"call"`
+}
 type Response struct{
 	Date float64 `json:"date"`
 	Results []Result `json:"results"`
+	Error Error `json:"error"`
 }
 
 type BuildingDependency struct {
@@ -51,4 +57,17 @@ type BuildingDependencies []BuildingDependency
 
 type Buildings struct {
 	Wall BuildingDependencies
+}
+
+type Call struct {
+	Ident string      `json:"ident"`
+	Args interface {} `json:"args"`
+	Name string       `json:"name"`
+}
+
+type Calls []Call
+
+type Request struct {
+	Calls Calls         `json:"calls"`
+	Session interface{} `json:"session"`
 }
