@@ -11,7 +11,7 @@ type Pair struct {
     Value string
 }
 
-func original(Uid string) {
+func original(Uid string, Akey string) {
 	flashvars := []Pair{
 		Pair{"fb_source", "bookmark"},
 		Pair{"ref", "bookmarks"},
@@ -24,7 +24,7 @@ func original(Uid string) {
 		Pair{"app_id", "1424411677784893"},
 		Pair{"interface_lang", "uk"},
 		Pair{"access_token", "CAAUPfrARez0BAKDb5H1uds5kLg3794HyPAbTYRZAA1H2i43NPl8sSjpxl77gIqDapYZB4QxWrZAK1H6VQUVAFbWuTWr4VYbXagirvciMba7FhyYKSUboICrvSJKYgBndShSZA0n4ZA5JRZBqigVbMRdCsHrjl8AQEmcWfbJqkHflqmv8XEBarKEVJRfLp56ksLZCO7TBzkfVQZDZD"},
-		Pair{"auth_key", "6514a97ae525f196b8060337380e0cbb"},
+		Pair{"auth_key", Akey},
 		Pair{"requestLoadingInfoTimeout", "3000"},
 		Pair{"ref", "bookmark"},
 		Pair{"rpc_url", "https%3A%2F%2Fepicwar-facebook.progrestar.net%2Frpc%2F"},

@@ -14,12 +14,12 @@ import (
 
 const SERVER_URL = "https://epicwar-facebook.progrestar.net/rpc/"
 const APP_ID     = "1424411677784893"
-const AUTH_KEY   = "6514a97ae525f196b8060337380e0cbb"
 const NETWORK    = "facebook"
 
 var _unionRequestID int
 var _uid string
 var _sid string
+var _akey string
 
 func createFingerprint(headers map[string]string) string {
 	var fingerprint bytes.Buffer
@@ -52,7 +52,7 @@ func createAuthSignature (headers map[string]string, postData string) string {
     h := md5.New()
 	io.WriteString(h, headers["X-Request-Id"])
 	io.WriteString(h, ":")
-    io.WriteString(h, AUTH_KEY);
+    io.WriteString(h, _akey);
     io.WriteString(h, ":");
     io.WriteString(h, headers["X-Auth-Session-Id"]);
     io.WriteString(h, ":");
@@ -98,8 +98,9 @@ func Post(postData []byte) []byte {
 	return body
 }
 
-func Init(Uid string, Sid string) {
+func Init(Uid string, Sid string, Akey string) {
 	_unionRequestID = 0
 	_uid = Uid
 	_sid = Sid
+	_akey = Akey
 }

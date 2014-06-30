@@ -9,8 +9,8 @@ import (
 )
 
 func main() {
-	network.Init(USER_ID, SESSION_ID)
-	original(USER_ID)
+	network.Init(USER_ID, SESSION_ID, AUTH_KEY)
+	original(USER_ID, AUTH_KEY)
 	bot.Main()
 
 	t := utils.Template("index")
